@@ -9,15 +9,24 @@ namespace ORM.Nhibernate {
 
         public BaseTests() {
             var cfg = new Configuration();
-            cfg.SetProperty(NHibernate.Cfg.Environment.Dialect, typeof(NHibernate.Dialect.SQLiteDialect).AssemblyQualifiedName);
-            cfg.SetProperty(NHibernate.Cfg.Environment.ConnectionDriver, typeof(NHibernate.Driver.SqlClientDriver).AssemblyQualifiedName);
-            cfg.SetProperty(NHibernate.Cfg.Environment.ProxyFactoryFactoryClass, typeof(NHibernate.ByteCode.Castle.ProxyFactoryFactory).AssemblyQualifiedName);
+            cfg.SetProperty(NHibernate.Cfg.Environment.Dialect, 
+                typeof(NHibernate.Dialect.SQLiteDialect).AssemblyQualifiedName);
+
+            cfg.SetProperty(NHibernate.Cfg.Environment.ConnectionDriver, 
+                typeof(NHibernate.Driver.SqlClientDriver).AssemblyQualifiedName);
+
+            cfg.SetProperty(NHibernate.Cfg.Environment.ProxyFactoryFactoryClass, 
+                typeof(NHibernate.ByteCode.Castle.ProxyFactoryFactory).AssemblyQualifiedName);
+
             cfg.SetProperty(NHibernate.Cfg.Environment.ConnectionString, ConnectionString);
+
             cfg.AddAssembly("ORM.Nhibernate");
 
             Session = cfg
                 .BuildSessionFactory()
                 .OpenSession();
+
+            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
         }
 
         public void Dispose() {

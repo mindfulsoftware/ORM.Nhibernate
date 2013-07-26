@@ -43,7 +43,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Model\Employee.hbm.xml" />
+    <EmbeddedResource Include="Model\Employee.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="nhibernate-configuration.xsd">
