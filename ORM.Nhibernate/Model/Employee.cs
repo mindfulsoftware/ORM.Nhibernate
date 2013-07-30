@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ORM.Nhibernate.Model {
     public class Employee {
@@ -20,5 +21,21 @@ namespace ORM.Nhibernate.Model {
         public virtual string Notes {get; set;} 
         public virtual string ReportsTo {get; set;}
         public virtual string PhotoPath { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
+
+        public Employee() {
+            Orders = new List<Order>();
+        }
+
+        public virtual void AddOrder(Order order) {
+            order.Employee = this;
+            Orders.Add(order);
+        }
+
+        public virtual void RemoveOrder(Order order) {
+            order.Employee = null;
+            Orders.Remove(order);
+        }
     }
 }

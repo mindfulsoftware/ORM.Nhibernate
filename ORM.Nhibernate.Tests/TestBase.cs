@@ -10,7 +10,7 @@ namespace ORM.Nhibernate {
         public BaseTests() {
             var cfg = new Configuration();
             cfg.SetProperty(NHibernate.Cfg.Environment.Dialect, 
-                typeof(NHibernate.Dialect.SQLiteDialect).AssemblyQualifiedName);
+                typeof(NHibernate.Dialect.MsSql2008Dialect).AssemblyQualifiedName);
 
             cfg.SetProperty(NHibernate.Cfg.Environment.ConnectionDriver, 
                 typeof(NHibernate.Driver.SqlClientDriver).AssemblyQualifiedName);

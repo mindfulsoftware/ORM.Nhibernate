@@ -26,6 +26,11 @@
     <property name="Notes" />
     <property name="ReportsTo" />
     <property name="PhotoPath" />
+
+    <set name="Orders" inverse="true" cascade="all-delete-orphan">
+      <key column ="EmployeeId" />
+      <one-to-many class ="Order" />
+    </set>
   </class>
 
 </hibernate-mapping>
