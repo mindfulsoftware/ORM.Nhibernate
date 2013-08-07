@@ -16,5 +16,35 @@ namespace ORM.Nhibernate.Model {
         public virtual string ShipRegion { get; set; }
         public virtual string ShipPostalCode { get; set; }
         public virtual string ShipCountry { get; set; }
+
+        public override string ToString() {
+            return string.Format("Order (OrderId: {0})", OrderId);
+        }
+
+        public override bool Equals(object obj) {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            Order o = (Order)obj;
+            return
+                (Employee == o.Employee) &&
+                (CustomerId == o.CustomerId) &&
+                (OrderDate == o.OrderDate);
+        }
+
+        public override int GetHashCode() {
+
+            // Jon Skeet's recommended implementation
+            // http://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode
+            unchecked {
+                int hash = 17;
+
+                hash = hash * 23 + (null == Employee ? new Employee().GetHashCode() : Employee.GetHashCode());
+                hash = hash * 23 + (string.IsNullOrEmpty(CustomerId) ? string.Empty.GetHashCode() : CustomerId.GetHashCode());
+                hash = hash * 23 + OrderDate.GetHashCode();
+
+                return hash;
+            }
+        }
     }
 }

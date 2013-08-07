@@ -37,5 +37,37 @@ namespace ORM.Nhibernate.Model {
             order.Employee = null;
             Orders.Remove(order);
         }
+
+        public override string ToString() {
+            return string.Format("Employee (EmployeeId: {0}, LastName: {1}, FirstName: {2})", EmployeeId, LastName, FirstName);
+        }
+
+        public override bool Equals(object obj) {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            Employee e = (Employee)obj;
+
+            return 
+                string.Compare(FirstName, e.FirstName, true) == 0 &&
+                string.Compare(LastName, e.LastName, true) == 0 &&
+                DateTime.Equals(BirthDate, e.BirthDate);
+        }
+
+        public override int GetHashCode() {
+
+            // Jon Skeet's recommended implementation
+            // http://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode
+            unchecked
+            {
+                int hash = 17;
+
+                hash = hash * 23 + (string.IsNullOrEmpty(FirstName) ? string.Empty.GetHashCode() : FirstName.GetHashCode());
+                hash = hash * 23 + (string.IsNullOrEmpty(LastName) ? string.Empty.GetHashCode() : LastName.GetHashCode()); 
+                hash = hash * 23 + BirthDate.GetHashCode();
+
+                return hash;
+            }
+        }
     }
 }

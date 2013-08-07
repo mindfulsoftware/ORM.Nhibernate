@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Linq; 
 using System.Collections.Generic;
-using NHibernate.Criterion;
+using System.Configuration;
 using ORM.Nhibernate.Model;
 using Xunit;
 
@@ -8,7 +9,7 @@ namespace ORM.Nhibernate.Tests {
     public class EmployeeTests: BaseTests  {
 
         public override string ConnectionString {
-            get { return "Data Source=.;Initial Catalog=Northwind;Integrated Security=SSPI"; }
+            get { return ConfigurationManager.ConnectionStrings["cnn"].ConnectionString; }
         }
 
 
@@ -116,6 +117,26 @@ namespace ORM.Nhibernate.Tests {
 
             Assert.NotNull(employees);
             Assert.Equal(5, employees.Count);
+        }
+
+
+        [Fact]
+        public void SelectingSpecifiedColumnsOnly() {
+
+            var employees = Session.QueryOver<Employee>()
+                .Select(
+                    x => x.TitleOfCourtesy, 
+                    x => x.FirstName,
+                    x => x.LastName, 
+                    x => x.Title
+                )
+                .List<object[]>()
+                .Select( x => new { TitleOfCouresty = x[0], FirstName = x[1], LastName = x[2], Title = x[3] });
+
+
+            Assert.NotNull(employees);
+
+
         }
     }
 }

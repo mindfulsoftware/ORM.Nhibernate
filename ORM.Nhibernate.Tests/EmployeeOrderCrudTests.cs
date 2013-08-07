@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using ORM.Nhibernate.Model;
 using Xunit;
 
 namespace ORM.Nhibernate.Tests {
-    public class EmployeeOrderTests : BaseTests {
+    public class EmployeeOrderCrudTests : BaseTests {
 
         public override string ConnectionString {
-            get { return "Data Source=.;Initial Catalog=Northwind;Integrated Security=SSPI"; }
+            get { return ConfigurationManager.ConnectionStrings["cnn"].ConnectionString; }
         }
 
         [Fact]

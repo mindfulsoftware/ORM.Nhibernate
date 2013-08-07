@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\EmployeeOrdersByCustomer.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Shipper.cs" />
