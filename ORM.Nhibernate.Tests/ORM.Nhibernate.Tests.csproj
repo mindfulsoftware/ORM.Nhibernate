@@ -63,6 +63,7 @@
     <Compile Include="EmployeeOrderCrudTests.cs" />
     <Compile Include="EmployeeOrderQueryingTests.cs" />
     <Compile Include="EmployeeTests.cs" />
+    <Compile Include="EmployeeUpdateTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />
   </ItemGroup>

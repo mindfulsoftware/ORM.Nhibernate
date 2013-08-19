@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace ORM.Nhibernate.Model {
     public class Employee {
         public virtual int EmployeeId {get; set; }
+        public virtual int Version { get; set; }
         public virtual string LastName {get; set;}
         public virtual string FirstName {get; set;} 
         public virtual string Title {get; set;} 
@@ -17,7 +18,7 @@ namespace ORM.Nhibernate.Model {
         public virtual string Country {get; set;} 
         public virtual string HomePhone {get; set;} 
         public virtual string Extension {get; set;} 
-        public virtual string Photo {get; set;} 
+        public virtual byte[] Photo {get; set;} 
         public virtual string Notes {get; set;} 
         public virtual string ReportsTo {get; set;}
         public virtual string PhotoPath { get; set; }
@@ -25,6 +26,11 @@ namespace ORM.Nhibernate.Model {
         public virtual ICollection<Order> Orders { get; set; }
 
         public Employee() {
+            LastName = FirstName = Title = TitleOfCourtesy = string.Empty;
+            Address = City = Region = PostalCode = Country = PostalCode = string.Empty;
+            HomePhone = Extension = Notes = ReportsTo = PhotoPath;
+            BirthDate = HireDate = DateTime.MinValue;
+
             Orders = new List<Order>();
         }
 
@@ -62,8 +68,14 @@ namespace ORM.Nhibernate.Model {
             {
                 int hash = 17;
 
-                hash = hash * 23 + (string.IsNullOrEmpty(FirstName) ? string.Empty.GetHashCode() : FirstName.GetHashCode());
-                hash = hash * 23 + (string.IsNullOrEmpty(LastName) ? string.Empty.GetHashCode() : LastName.GetHashCode()); 
+                hash = hash * 23 + (string.IsNullOrEmpty(FirstName) ? 
+                    string.Empty.GetHashCode() : 
+                    FirstName.GetHashCode());
+
+                hash = hash * 23 + (string.IsNullOrEmpty(LastName) ? 
+                    string.Empty.GetHashCode() : 
+                    LastName.GetHashCode()); 
+
                 hash = hash * 23 + BirthDate.GetHashCode();
 
                 return hash;

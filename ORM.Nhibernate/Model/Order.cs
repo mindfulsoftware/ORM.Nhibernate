@@ -36,11 +36,18 @@ namespace ORM.Nhibernate.Model {
 
             // Jon Skeet's recommended implementation
             // http://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode
-            unchecked {
+            unchecked 
+            {
                 int hash = 17;
 
-                hash = hash * 23 + (null == Employee ? new Employee().GetHashCode() : Employee.GetHashCode());
-                hash = hash * 23 + (string.IsNullOrEmpty(CustomerId) ? string.Empty.GetHashCode() : CustomerId.GetHashCode());
+                hash = hash * 23 + (null == Employee ? 
+                    new Employee().GetHashCode() : 
+                    Employee.GetHashCode());
+
+                hash = hash * 23 + (string.IsNullOrEmpty(CustomerId) ? 
+                    string.Empty.GetHashCode() : 
+                    CustomerId.GetHashCode());
+
                 hash = hash * 23 + OrderDate.GetHashCode();
 
                 return hash;

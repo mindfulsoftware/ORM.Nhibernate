@@ -52,7 +52,6 @@ namespace ORM.Nhibernate.Tests {
                     };
 
                     employee.AddOrder(order);
-                    Session.Update(employee);
                     tx.Commit();
                 }
             });
@@ -61,7 +60,6 @@ namespace ORM.Nhibernate.Tests {
             Assert.DoesNotThrow(() => {
                 using (var tx = Session.BeginTransaction()) {
                     employee.RemoveOrder(order);
-                    Session.Update(employee);
                     tx.Commit();
                 }
             });
@@ -84,7 +82,6 @@ namespace ORM.Nhibernate.Tests {
                         break;
                     }
 
-                    Session.Update(e);
                     tx.Commit();
                 }
             });
@@ -116,7 +113,32 @@ namespace ORM.Nhibernate.Tests {
                         ShipCountry = string.Empty,
                     });
 
-                    Session.Update(e);
+                    tx.Commit();
+                }
+            });
+        }
+
+        [Fact]
+        public void CanInsertNewEmployee() {
+
+            int employeeId = 0;
+
+            Assert.DoesNotThrow(() => {
+                using (var tx = Session.BeginTransaction()) {
+                    var e = new Employee() {
+                        BirthDate = DateTime.Now,
+                        HireDate = DateTime.Now
+                    };
+
+                    Session.Save(e);
+                    tx.Commit();
+
+                    employeeId = e.EmployeeId;
+                    Assert.NotEqual(0, employeeId); 
+                }
+
+                using (var tx = Session.BeginTransaction()) {
+                    Session.Delete(Session.Load<Employee>(employeeId));
                     tx.Commit();
                 }
             });

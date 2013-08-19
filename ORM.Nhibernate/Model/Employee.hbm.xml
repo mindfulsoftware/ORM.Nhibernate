@@ -5,9 +5,10 @@
   namespace="ORM.Nhibernate.Model">
 
   <class name="Employee" table="Employees">
-    <id name="EmployeeId">
+    <id name="EmployeeId" unsaved-value ="0">
       <generator class="identity" />
     </id>
+    <version name="Version" unsaved-value="0" />
     
     <property name="LastName" />
     <property name="FirstName" />
